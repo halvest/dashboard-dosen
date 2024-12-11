@@ -13,17 +13,13 @@ $route['logout'] = 'auth/logout';
 // Routes untuk Dashboard
 $route['dashboard'] = 'dashboard/index';
 
-// Routes untuk Mahasiswa
-$route['mahasiswa'] = 'mahasiswa/index'; // Halaman daftar mahasiswa
-$route['mahasiswa/tambah'] = 'mahasiswa/tambah';
-$route['mahasiswa/hapus/(:num)'] = 'mahasiswa/hapus/$1';
-$route['mahasiswa/edit/(:num)'] = 'mahasiswa/edit/$1'; // (Opsional)
-
-// Routes untuk Nilai
-$route['nilai'] = 'nilai/index'; // Halaman daftar nilai
-$route['nilai/tambah'] = 'nilai/tambah';
-$route['nilai/hapus/(:num)'] = 'nilai/hapus/$1';
-$route['nilai/edit/(:num)'] = 'nilai/edit/$1'; // (Opsional)
+// Routes untuk Dashboard
+$route['dashboard'] = 'dashboard/index'; // Halaman utama dashboard
+$route['dashboard/tambah_mahasiswa'] = 'dashboard/tambah_mahasiswa'; // Halaman tambah mahasiswa
+$route['dashboard/hapus_mahasiswa'] = 'dashboard/hapus_mahasiswa'; // Halaman hapus mahasiswa
+$route['dashboard/tambah_nilai'] = 'dashboard/tambah_nilai'; // Halaman tambah nilai
+$route['dashboard/hapus_nilai'] = 'dashboard/hapus_nilai'; // Halaman hapus nilai
+$route['dashboard/laporan_nilai'] = 'dashboard/laporan_nilai'; // Halaman laporan nilai
 
 // Routes untuk Laporan
 $route['laporan'] = 'laporan/index';

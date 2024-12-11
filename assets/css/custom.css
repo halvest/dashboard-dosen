@@ -3,6 +3,28 @@ body {
     background-color: #f8f9fa;
     overflow-x: hidden;
 }
+html, body {
+    height: 100%; /* Pastikan elemen root memiliki tinggi 100% */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Mengatur elemen body menjadi kolom vertikal */
+}
+
+.main-content {
+    flex: 1; /* Membuat area utama fleksibel agar mendorong footer ke bawah */
+}
+
+.footer {
+    position: relative; /* Pastikan footer tetap berada di dalam layout */
+    bottom: 0;
+    width: 100%; /* Penuhi lebar halaman */
+    margin-top: auto; /* Dorong footer ke bawah jika konten lebih pendek dari tinggi layar */
+}
+
+.flex-grow-1 {
+    overflow-x: hidden; /* Hindari scroll horizontal */
+}
 
 .sidebar {
     position: fixed;
@@ -13,6 +35,8 @@ body {
     color: white;
     z-index: 1060; /* Z-index lebih tinggi agar di atas konten */
     transition: transform 0.3s ease; /* Animasi saat toggle */
+    z-index: 1050; /* Pastikan sidebar berada di atas elemen lainnya */
+    height: 100vh; /* Pastikan sidebar memiliki tinggi penuh */
 }
 
 .sidebar.active {

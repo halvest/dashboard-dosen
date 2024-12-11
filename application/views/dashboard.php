@@ -1,3 +1,4 @@
+
 <div class="flex-grow-1 ms-auto p-4" style="margin-left: 250px;">
     <!-- Welcome Message -->
     <div class="row mb-4">
@@ -8,10 +9,11 @@
             </p>
         </div>
     </div>
-    <!-- Recent Data Section -->
-    <div class="table-container">
+    <!-- Tabel Data Terbaru -->
+    <div class="table-container mb-5">
         <div class="table-responsive">
-            <table id="dataTable" class="table table-striped table-hover table-bordered text-center align-middle">
+            <h5 class="mb-3">Data Mahasiswa Terbaru</h5>
+            <table class="table table-striped table-hover table-bordered text-center align-middle">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>No</th>
@@ -20,40 +22,63 @@
                         <th>Kelas</th>
                         <th>Nilai Angka</th>
                         <th>Nilai Huruf</th>
-                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!empty($laporan)): ?>
+                    <?php if (!empty($recent_mahasiswa)): ?>
                         <?php $nomor = 1; ?>
-                        <?php foreach ($laporan as $data): ?>
-                            <?php 
-                                $nilai_angka = hitungNilaiAngka($data['tugas'], $data['responsi'], $data['uts'], $data['uas']); 
-                                $nilai_huruf = konversiNilaiHuruf($nilai_angka); 
-                            ?>
+                        <?php foreach ($recent_mahasiswa as $mahasiswa): ?>
                             <tr>
                                 <td><?= $nomor++; ?></td>
-                                <td><?= htmlspecialchars($data['nama']); ?></td>
-                                <td><?= htmlspecialchars($data['nim']); ?></td>
-                                <td><?= htmlspecialchars($data['kelas']); ?></td>
-                                <td><strong><?= number_format($nilai_angka, 2); ?></strong></td>
-                                <td><span class="badge bg-secondary"><?= htmlspecialchars($nilai_huruf); ?></span></td>
-                                <td>
-                                    <a href="<?= base_url('dashboard/hapus_mahasiswa/' . htmlspecialchars($data['nim'])); ?>" 
-                                       class="btn btn-danger btn-sm" 
-                                       onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </a>
-                                </td>
+                                <td><?= htmlspecialchars($mahasiswa['nama']); ?></td>
+                                <td><?= htmlspecialchars($mahasiswa['nim']); ?></td>
+                                <td><?= htmlspecialchars($mahasiswa['kelas']); ?></td>
+                                <td><?= number_format($mahasiswa['nilai_angka'], 2); ?></td>
+                                <td><?= htmlspecialchars($mahasiswa['nilai_huruf']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7" class="text-center text-muted">Tidak ada data mahasiswa.</td>
+                            <td colspan="6" class="text-muted">Belum ada data terbaru.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Grafik -->
+    <div class="chart-container">
+        <h5 class="mb-4">Grafik Rata-Rata Nilai Mahasiswa</h5>
+        <canvas id="nilaiChart" style="max-height: 400px;"></canvas>
+    </div>
 </div>
+<!-- Tambahkan script untuk grafik -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('nilaiChart').getContext('2d');
+        const chartData = {
+            labels: <?= json_encode($chart_labels ?? []); ?>, // Array label (misal: nama mahasiswa)
+            datasets: [{
+                label: 'Rata-Rata Nilai',
+                data: <?= json_encode($chart_data ?? []); ?>, // Array nilai
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        };
+        const config = {
+            type: 'bar',
+            data: chartData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        new Chart(ctx, config);
+    });
+</script>
