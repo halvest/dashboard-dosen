@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$route['default_controller'] = 'auth/login'; // Mengarahkan root URL ke halaman login
+// Default route
+$route['default_controller'] = 'auth/login'; // Arahkan ke login saat root URL diakses
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -10,16 +11,20 @@ $route['login'] = 'auth/login';
 $route['register'] = 'auth/register';
 $route['logout'] = 'auth/logout';
 
-// Routes untuk Dashboard
-$route['dashboard'] = 'dashboard/index';
+// Routes untuk admin
+$route['admin'] = 'admin/index'; // Dashboard Admin
+$route['admin/kelola_mahasiswa'] = 'admin/kelola_mahasiswa';
+$route['admin/input_nilai'] = 'admin/input_nilai';
+$route['admin/kelola_jadwal'] = 'admin/kelola_jadwal';
+$route['admin/tambah_mahasiswa'] = 'admin/tambah_mahasiswa';
+$route['admin/hapus_mahasiswa/(:num)'] = 'admin/hapus_mahasiswa/$1';
 
-// Routes untuk Dashboard
-$route['dashboard'] = 'dashboard/index'; // Halaman utama dashboard
-$route['dashboard/tambah_mahasiswa'] = 'dashboard/tambah_mahasiswa'; // Halaman tambah mahasiswa
-$route['dashboard/hapus_mahasiswa'] = 'dashboard/hapus_mahasiswa'; // Halaman hapus mahasiswa
-$route['dashboard/tambah_nilai'] = 'dashboard/tambah_nilai'; // Halaman tambah nilai
-$route['dashboard/hapus_nilai'] = 'dashboard/hapus_nilai'; // Halaman hapus nilai
-$route['dashboard/laporan_nilai'] = 'dashboard/laporan_nilai'; // Halaman laporan nilai
+// Routes untuk dosen
+$route['dosen'] = 'dosen/index'; // Dashboard Dosen
+$route['dosen/kelola_nilai'] = 'dosen/kelola_nilai';
+$route['dosen/tambah_nilai'] = 'dosen/tambah_nilai';
+$route['dosen/hapus_nilai/(:num)'] = 'dosen/hapus_nilai/$1';
 
-// Routes untuk Laporan
-$route['laporan'] = 'laporan/index';
+// Routes untuk mahasiswa
+$route['mahasiswa'] = 'mahasiswa/index'; // Dashboard Mahasiswa
+$route['mahasiswa/nilai'] = 'mahasiswa/lihat_nilai';

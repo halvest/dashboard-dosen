@@ -5,7 +5,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const toggleButton = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
-        const content = document.getElementById('content');
+        const content = document.getElementById('content-admin');
 
         if (toggleButton) {
             toggleButton.addEventListener('click', function () {

@@ -1,0 +1,169 @@
+-- Membuat Database Akademik
+CREATE DATABASE IF NOT EXISTS db_akademik;
+USE db_akademik;
+
+-- Tabel User
+CREATE TABLE user (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'dosen', 'mahasiswa') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Dosen
+CREATE TABLE dosen (
+    id_dosen INT AUTO_INCREMENT PRIMARY KEY,
+    nip VARCHAR(20) UNIQUE NOT NULL,
+    nama VARCHAR(100) NOT NULL,
+    alamat VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Kelas
+CREATE TABLE kelas (
+    id_kelas INT AUTO_INCREMENT PRIMARY KEY,
+    nama_kelas VARCHAR(50) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Mahasiswa
+CREATE TABLE mahasiswa (
+    id_mahasiswa INT AUTO_INCREMENT PRIMARY KEY,
+    nim VARCHAR(20) UNIQUE NOT NULL,
+    nama VARCHAR(100) NOT NULL,
+    id_kelas INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas) ON DELETE CASCADE
+);
+
+-- Tabel Mata Kuliah
+CREATE TABLE mata_kuliah (
+    id_mata_kuliah INT AUTO_INCREMENT PRIMARY KEY,
+    nama_mata_kuliah VARCHAR(100) UNIQUE NOT NULL,
+    sks INT NOT NULL CHECK (sks > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Tabel Jadwal Mengajar
+CREATE TABLE jadwal_mengajar (
+    id_jadwal INT AUTO_INCREMENT PRIMARY KEY,
+    id_dosen INT NOT NULL,
+    id_mata_kuliah INT NOT NULL,
+    id_kelas INT NOT NULL,
+    hari ENUM('Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu') NOT NULL,
+    jam_mulai TIME NOT NULL,
+    jam_selesai TIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_dosen) REFERENCES dosen(id_dosen) ON DELETE CASCADE,
+    FOREIGN KEY (id_mata_kuliah) REFERENCES mata_kuliah(id_mata_kuliah) ON DELETE CASCADE,
+    FOREIGN KEY (id_kelas) REFERENCES kelas(id_kelas) ON DELETE CASCADE,
+    CHECK (jam_mulai < jam_selesai)
+);
+
+-- Tabel Nilai Mahasiswa
+CREATE TABLE nilai_mahasiswa (
+    id_nilai INT AUTO_INCREMENT PRIMARY KEY,
+    id_mahasiswa INT NOT NULL,
+    id_mata_kuliah INT NOT NULL,
+    tugas DECIMAL(5, 2) DEFAULT 0 CHECK (tugas >= 0 AND tugas <= 100),
+    responsi DECIMAL(5, 2) DEFAULT 0 CHECK (responsi >= 0 AND responsi <= 100),
+    uts DECIMAL(5, 2) DEFAULT 0 CHECK (uts >= 0 AND uts <= 100),
+    uas DECIMAL(5, 2) DEFAULT 0 CHECK (uas >= 0 AND uas <= 100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa(id_mahasiswa) ON DELETE CASCADE,
+    FOREIGN KEY (id_mata_kuliah) REFERENCES mata_kuliah(id_mata_kuliah) ON DELETE CASCADE
+);
+
+
+-- Insert data ke tabel 'user'
+INSERT INTO user (username, password, role) VALUES
+('admin1', 'admin123', 'admin'),
+('101', 'dosen123', 'dosen'),
+('23.01.5103', 'hasyimadani', 'mahasiswa');
+
+-- Insert data ke tabel 'dosen'
+INSERT INTO dosen (nip, nama, alamat) VALUES
+('101', 'Firman Asharudin, S.Kom, M.Kom', 'Jl. Anggrek No.1'),
+('102', 'Sharazita Dyah Anggita, M.Kom', 'Jl. Melati No.2'),
+('103', 'Nila Feby Puspitasari, S.Kom, M.Cs', 'Jl. Kenanga No.3'),
+('104', 'Toto Indriyatmoko, M.Kom', 'Jl. Mawar No.4'),
+('105', 'Arvin Claudy Frobenius, M.Kom', 'Jl. Anggrek No.5');
+
+-- Insert data ke tabel 'kelas'
+INSERT INTO kelas (nama_kelas) VALUES
+('D3TI-01'),
+('D3TI-02'),
+('D3TI-03');
+
+-- Insert data ke tabel 'mahasiswa'
+INSERT INTO mahasiswa (nim, nama, id_kelas) VALUES
+('23.01.5103', 'Hasyim Adani', 3),
+('23.01.5104', 'Tina Susanti', 3),
+('23.01.5105', 'John Doe', 2),
+('23.01.5106', 'Jane Doe', 2),
+('23.01.5107', 'Rizky Amalia', 1),
+('23.01.5108', 'Afif Saputra', 3),
+('23.01.5109', 'Yulia Trisna', 3),
+('23.01.5110', 'Agus Prayoga', 1),
+('23.01.5111', 'Silvia Susanti', 2),
+('23.01.5112', 'Benny Gunawan', 2),
+('23.01.5113', 'Nur Anifah', 1),
+('23.01.5114', 'Fadly Hakim', 3),
+('23.01.5115', 'Melani Agus', 2),
+('23.01.5116', 'Taufik Anwar', 1),
+('23.01.5117', 'Wahyu Satria', 1);
+
+-- Insert data ke tabel 'mata_kuliah'
+INSERT INTO mata_kuliah (nama_mata_kuliah, sks) VALUES
+('STRUKTUR DATA (Teori)', 3),
+('REKAYASA PERANGKAT LUNAK (Teori)', 3),
+('HUMAN COMPUTER INTERACTION (Teori)', 3),
+('SUCCESS SKILL (Teori)', 2),
+('BAHASA INDONESIA (Teori)', 2),
+('PENGOLAHAN BASIS DATA (Teori)', 3),
+('BACK END DEVELOPMENT (Teori)', 3),
+('REKAYASA PERANGKAT LUNAK (Praktikum)', 2),
+('BACK END DEVELOPMENT (Praktikum)', 2),
+('PENGOLAHAN BASIS DATA (Praktikum)', 2),
+('STRUKTUR DATA (Praktikum)', 2);
+
+-- Insert data ke tabel 'jadwal_mengajar'
+INSERT INTO jadwal_mengajar (id_dosen, id_mata_kuliah, id_kelas, hari, jam_mulai, jam_selesai) VALUES
+(1, 1, 3, 'Senin', '10:40:00', '12:20:00'), -- Struktur Data (Teori)
+(3, 2, 3, 'Senin', '13:20:00', '15:00:00'), -- Rekayasa Perangkat Lunak (Teori)
+(5, 3, 3, 'Senin', '15:30:00', '17:10:00'), -- Human Computer Interaction (Teori)
+(3, 4, 2, 'Selasa', '07:00:00', '08:40:00'), -- Success Skill (Teori)
+(2, 5, 1, 'Rabu', '07:00:00', '08:40:00'), -- Bahasa Indonesia (Teori)
+(2, 6, 2, 'Rabu', '10:40:00', '12:20:00'), -- Pengolahan Basis Data (Teori)
+(1, 7, 3, 'Rabu', '15:30:00', '17:10:00'), -- Back End Development (Teori)
+(3, 8, 2, 'Kamis', '08:50:00', '10:30:00'), -- Rekayasa Perangkat Lunak (Praktikum)
+(1, 9, 3, 'Kamis', '15:30:00', '17:10:00'), -- Back End Development (Praktikum)
+(2, 10, 2, 'Jumat', '07:00:00', '08:40:00'), -- Pengolahan Basis Data (Praktikum)
+(4, 11, 3, 'Jumat', '15:30:00', '17:10:00'); -- Struktur Data (Praktikum)
+
+-- Insert data ke tabel 'nilai_mahasiswa'
+INSERT INTO nilai_mahasiswa (id_mahasiswa, id_mata_kuliah, tugas, responsi, uts, uas) VALUES
+(1, 1, 85.00, 90.00, 88.00, 92.00), -- Hasyim Adani, Struktur Data (Teori)
+(2, 1, 78.00, 75.00, 80.00, 82.00), -- Tina Susanti, Struktur Data (Teori)
+(3, 2, 88.00, 85.00, 87.00, 90.00), -- John Doe, Rekayasa Perangkat Lunak (Teori)
+(4, 2, 75.00, 78.00, 80.00, 77.00), -- Jane Doe, Rekayasa Perangkat Lunak (Teori)
+(5, 3, 80.00, 85.00, 88.00, 85.00), -- Rizky Amalia, Human Computer Interaction (Teori)
+(6, 3, 82.00, 80.00, 84.00, 85.00), -- Afif Saputra, Human Computer Interaction (Teori)
+(7, 4, 78.00, 80.00, 82.00, 80.00), -- Yulia Trisna, Success Skill (Teori)
+(8, 4, 85.00, 88.00, 87.00, 90.00), -- Agus Prayoga, Success Skill (Teori)
+(9, 5, 90.00, 88.00, 92.00, 93.00), -- Silvia Susanti, Bahasa Indonesia (Teori)
+(10, 6, 85.00, 80.00, 87.00, 88.00), -- Benny Gunawan, Pengolahan Basis Data (Teori)
+(11, 6, 78.00, 82.00, 80.00, 85.00), -- Nur Anifah, Pengolahan Basis Data (Teori)
+(12, 7, 88.00, 85.00, 87.00, 90.00), -- Fadly Hakim, Back End Development (Teori)
+(13, 8, 90.00, 87.00, 85.00, 92.00), -- Melani Agus, Rekayasa Perangkat Lunak (Praktikum)
+(14, 9, 85.00, 88.00, 90.00, 89.00), -- Taufik Anwar, Back End Development (Praktikum)
+(15, 10, 75.00, 78.00, 80.00, 77.00); -- Wahyu Satria, Pengolahan Basis Data (Praktikum)
+

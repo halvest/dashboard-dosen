@@ -1,61 +1,139 @@
+/* General Styles */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif;
+    margin-top: 56px;
     background-color: #f8f9fa;
-    overflow-x: hidden;
-}
-html, body {
-    height: 100%; /* Pastikan elemen root memiliki tinggi 100% */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column; /* Mengatur elemen body menjadi kolom vertikal */
 }
 
-.main-content {
-    flex: 1; /* Membuat area utama fleksibel agar mendorong footer ke bawah */
+/* Navbar */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 1000; /* Ensure navbar is above everything */
+}
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
-.footer {
-    position: relative; /* Pastikan footer tetap berada di dalam layout */
-    bottom: 0;
-    width: 100%; /* Penuhi lebar halaman */
-    margin-top: auto; /* Dorong footer ke bawah jika konten lebih pendek dari tinggi layar */
-}
-
-.flex-grow-1 {
-    overflow-x: hidden; /* Hindari scroll horizontal */
-}
-
-.sidebar {
+/* Sidebar */
+#sidebar {
+    transition: transform 0.3s ease, width 0.3s ease;
+    width: 250px;
     position: fixed;
     top: 0;
     left: 0;
-    width: 250px;
+    height: 100%;
     background-color: #343a40;
-    color: white;
-    z-index: 1060; /* Z-index lebih tinggi agar di atas konten */
-    transition: transform 0.3s ease; /* Animasi saat toggle */
-    z-index: 1050; /* Pastikan sidebar berada di atas elemen lainnya */
-    height: 100vh; /* Pastikan sidebar memiliki tinggi penuh */
+    color: #ffffff;
+    padding: 56px 15px 15px;
+    transform: translateX(0);
+    z-index: 1000;
+}
+#sidebar.collapsed {
+    transform: translateX(-250px);
+}
+#sidebar .nav-link {
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+#sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+}
+#sidebar img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+#sidebar h5 {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 10px;
+    border-bottom: 2px solid white;
+    padding-bottom: 5px;
 }
 
-.sidebar.active {
-    transform: translateX(-250px); /* Sidebar tersembunyi */
+/* Logout Button */
+.logout-button {
+    position: absolute;
+    bottom: 20px;
+    width: calc(100% - 30px);
+}
+.logout-button .btn:hover {
+    background-color: #dc3545 !important;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.main-content {
-    margin-left: 250px; /* Margin default untuk memberi ruang sidebar */
-    padding: 20px;
-    transition: margin-left 0.3s ease; /* Animasi saat sidebar ditutup */
-    z-index: 1; /* Z-index lebih rendah agar tidak menutupi sidebar */
+/* Cards in Dashboard */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+.card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
-.main-content.fullwidth {
-    margin-left: 0; /* Konten memenuhi layar saat sidebar ditutup */
+/* Buttons */
+.btn {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    background-color: #fff !important;
+    color: #343a40 !important;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.navbar {
-    z-index: 1061; /* Pastikan navbar berada di atas sidebar */
-    position: sticky; /* Navbar tetap di atas saat scroll */
-    top: 0;
+/* Specific Card Background Colors */
+.bg-primary {
+    background-color: #007bff !important;
 }
+.bg-success {
+    background-color: #28a745 !important;
+}
+.bg-info {
+    background-color: #17a2b8 !important;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 70px;
+    }
+    #sidebar.collapsed {
+        transform: translateX(-70px);
+    }
+}
+
+

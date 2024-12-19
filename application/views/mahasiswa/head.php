@@ -18,7 +18,6 @@
     }
 
     #sidebar {
-        
         width: 250px;
         position: fixed;
         top: 0;
