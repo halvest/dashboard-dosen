@@ -12,12 +12,14 @@ $route['register'] = 'auth/register';
 $route['logout'] = 'auth/logout';
 
 // Routes untuk admin
-$route['admin'] = 'admin/index'; // Dashboard Admin
+
+$route['admin'] = 'admin/index';
 $route['admin/kelola_mahasiswa'] = 'admin/kelola_mahasiswa';
+$route['admin/tambah_mahasiswa'] = 'admin/tambah_mahasiswa';
+$route['admin/edit_mahasiswa/(:any)'] = 'admin/edit_mahasiswa/$1';
+$route['admin/hapus_mahasiswa/(:any)'] = 'admin/hapus_mahasiswa/$1';
 $route['admin/input_nilai'] = 'admin/input_nilai';
 $route['admin/kelola_jadwal'] = 'admin/kelola_jadwal';
-$route['admin/tambah_mahasiswa'] = 'admin/tambah_mahasiswa';
-$route['admin/hapus_mahasiswa/(:num)'] = 'admin/hapus_mahasiswa/$1';
 
 // Routes untuk dosen
 $route['dosen'] = 'dosen/index'; // Dashboard Dosen

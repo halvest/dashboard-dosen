@@ -19,18 +19,14 @@ class Admin_model extends CI_Model {
         $this->db->insert('mahasiswa', $data);
     }
 
+    // Update mahasiswa
+    public function update_mahasiswa($id, $data) {
+        $this->db->where('id_mahasiswa', $id);
+        $this->db->update('mahasiswa', $data);
+    }
+
     // Delete mahasiswa
     public function delete_mahasiswa($id) {
         $this->db->delete('mahasiswa', ['id_mahasiswa' => $id]);
-    }
-
-    // Get all mata kuliah
-    public function get_mata_kuliah() {
-        return $this->db->get('mata_kuliah')->result_array();
-    }
-
-    // Get all dosen
-    public function get_dosen() {
-        return $this->db->get('dosen')->result_array();
     }
 }
