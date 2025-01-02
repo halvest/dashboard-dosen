@@ -8,7 +8,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Manajemen Mahasiswa</h5>
                         <p class="card-text">Tambah, hapus, dan edit data mahasiswa.</p>
-                        <a href="<?= base_url('index.php/admin/kelola_mahasiswa'); ?>" class="btn btn-light mt-auto">
+                        <a href="<?= base_url('admin/kelola_mahasiswa'); ?>" class="btn btn-light mt-auto">
                             <i class="bi bi-people-fill"></i> Kelola Mahasiswa
                         </a>
                     </div>
@@ -20,7 +20,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Input Nilai Mahasiswa</h5>
                         <p class="card-text">Masukkan nilai mahasiswa berdasarkan laporan dosen.</p>
-                        <a href="<?= base_url('index.php/admin/input_nilai'); ?>" class="btn btn-light mt-auto">
+                        <a href="<?= base_url('admin/input_nilai'); ?>" class="btn btn-light mt-auto">
                             <i class="bi bi-pencil-square"></i> Input Nilai
                         </a>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">Jadwal Mengajar</h5>
                         <p class="card-text">Atur jadwal mengajar dosen untuk setiap kelas.</p>
-                        <a href="<?= base_url('index.php/admin/kelola_jadwal'); ?>" class="btn btn-light mt-auto">
+                        <a href="<?= base_url('admin/kelola_jadwal'); ?>" class="btn btn-light mt-auto">
                             <i class="bi bi-calendar-check"></i> Kelola Jadwal
                         </a>
                     </div>

@@ -1,5 +1,11 @@
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Kelola Mahasiswa</h1>
+
+    <!-- Flash Messages -->
+    <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
+    <?php endif; ?>
+
     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Mahasiswa</button>
     <table class="table table-hover table-striped align-middle">
         <thead class="table-dark">
@@ -19,10 +25,11 @@
                     <td><?= $mhs['nama']; ?></td>
                     <td><?= $mhs['nama_kelas']; ?></td>
                     <td class="text-center">
-                        <a href="<?= base_url('admin/hapus_mahasiswa/' . $mhs['id_mahasiswa']); ?>" class="btn btn-danger btn-sm">Hapus</a>
+                        <a href="<?= base_url('admin/hapus_mahasiswa/' . $mhs['id_mahasiswa']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                         <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $mhs['id_mahasiswa']; ?>">Edit</button>
                     </td>
                 </tr>
+
                 <!-- Modal Edit -->
                 <div class="modal fade" id="modalEdit<?= $mhs['id_mahasiswa']; ?>" tabindex="-1">
                     <div class="modal-dialog">
@@ -33,9 +40,9 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="text" name="nim" value="<?= $mhs['nim']; ?>" required>
-                                    <input type="text" name="nama" value="<?= $mhs['nama']; ?>" required>
-                                    <select name="id_kelas" required>
+                                    <input type="text" name="nim" value="<?= $mhs['nim']; ?>" class="form-control mb-2" required>
+                                    <input type="text" name="nama" value="<?= $mhs['nama']; ?>" class="form-control mb-2" required>
+                                    <select name="id_kelas" class="form-control" required>
                                         <?php foreach ($kelas as $kls): ?>
                                             <option value="<?= $kls['id_kelas']; ?>" <?= $kls['id_kelas'] == $mhs['id_kelas'] ? 'selected' : ''; ?>>
                                                 <?= $kls['nama_kelas']; ?>
@@ -65,9 +72,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="nim" placeholder="NIM" required>
-                    <input type="text" name="nama" placeholder="Nama" required>
-                    <select name="id_kelas" required>
+                    <input type="text" name="nim" placeholder="NIM" class="form-control mb-2" required>
+                    <input type="text" name="nama" placeholder="Nama" class="form-control mb-2" required>
+                    <select name="id_kelas" class="form-control" required>
                         <option value="" disabled selected>Pilih Kelas</option>
                         <?php foreach ($kelas as $kls): ?>
                             <option value="<?= $kls['id_kelas']; ?>"><?= $kls['nama_kelas']; ?></option>

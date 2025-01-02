@@ -44,6 +44,7 @@ class Admin extends CI_Controller {
                 'id_kelas' => $this->input->post('id_kelas')
             ];
             $this->Admin_model->insert_mahasiswa($data);
+            $this->session->set_flashdata('success', 'Mahasiswa berhasil ditambahkan.');
             redirect('admin/kelola_mahasiswa');
         }
     }
@@ -62,12 +63,14 @@ class Admin extends CI_Controller {
                 'id_kelas' => $this->input->post('id_kelas')
             ];
             $this->Admin_model->update_mahasiswa($id, $data);
+            $this->session->set_flashdata('success', 'Mahasiswa berhasil diperbarui.');
             redirect('admin/kelola_mahasiswa');
         }
     }
 
     public function hapus_mahasiswa($id) {
         $this->Admin_model->delete_mahasiswa($id);
+        $this->session->set_flashdata('success', 'Mahasiswa berhasil dihapus.');
         redirect('admin/kelola_mahasiswa');
     }
 }
