@@ -23,8 +23,8 @@ $route['admin/kelola_jadwal'] = 'admin/kelola_jadwal';
 
 // Routes untuk dosen
 $route['dosen'] = 'dosen/index'; // Dashboard Dosen
-$route['dosen/kelola_nilai'] = 'dosen/kelola_nilai';
-$route['dosen/tambah_nilai'] = 'dosen/tambah_nilai';
+$route['dosen/rekap_nilai'] = 'dosen/rekap_nilai';
+$route['dosen/input_nilai'] = 'dosen/input_nilai';
 $route['dosen/hapus_nilai/(:num)'] = 'dosen/hapus_nilai/$1';
 
 // Routes untuk mahasiswa

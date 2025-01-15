@@ -1,17 +1,15 @@
 <div id="wrapper" class="d-flex">
-    <nav id="sidebar" class="bg-primary text-white vh-100 d-flex flex-column p-3">
+    <nav id="sidebar" class="bg-primary text-white vh-100 p-3" style="margin-top: 56px;">
         <!-- Foto Profil dan Nama Dosen -->
         <div class="d-flex flex-column align-items-center mb-4">
-            <img src="<?= base_url('assets/img/profile.jpg'); ?>" alt="Foto Profil" class="rounded-circle mb-3" 
-                style="width: 100px; height: 100px; object-fit: cover;">
-            <h5 class="text-white text-center mb-0" 
-                style="border-bottom: 2px solid white; padding-bottom: 5px;">Nama Dosen</h5>
+            <img src="<?= base_url('assets/img/profile.jpg'); ?>" alt="Foto Profil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
+            <h5 class="text-white text-center mb-2" style="border-bottom: 2px solid white; padding-bottom: 5px;">Nama Dosen</h5>
         </div>
 
         <!-- Daftar Navigasi -->
         <ul class="nav flex-column flex-grow-1 overflow-auto" style="margin-top: 20px;">
             <li class="nav-item mb-2">
-                <a href="<?= base_url('index.php/dashboard'); ?>" class="nav-link text-white d-flex align-items-center">
+                <a href="<?= base_url('dosen/index'); ?>" class="nav-link text-white d-flex align-items-center">
                     <i class="bi bi-house-door-fill me-2"></i> Dashboard
                 </a>
             </li>
