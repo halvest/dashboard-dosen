@@ -1,8 +1,6 @@
 <div class="container mt-4">
     <br>
     <br>
-    <h1 class="mb-4 text-center">Kelola Mahasiswa</h1>
-
     <!-- Flash Messages -->
     <?php if ($this->session->flashdata('success')): ?>
         <div class="alert alert-success"><?= $this->session->flashdata('success'); ?></div>
@@ -12,7 +10,7 @@
     <table class="table table-hover table-striped align-middle">
         <thead class="table-dark">
             <tr>
-                <th>#</th>
+                <th>No</th>
                 <th>NIM</th>
                 <th>Nama</th>
                 <th>Kelas</th>

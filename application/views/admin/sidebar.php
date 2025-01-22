@@ -1,9 +1,9 @@
 <div id="wrapper" class="d-flex">
     <nav id="sidebar" class="bg-primary text-white vh-100 p-3" style="margin-top: 56px;">
-        <!-- Foto Profil dan Nama Dosen -->
+        <!-- Foto Profil dan Nama Admin -->
         <div class="d-flex flex-column align-items-center mb-4">
             <img src="<?= base_url('assets/img/profile.jpg'); ?>" alt="Foto Profil" class="rounded-circle mb-2" style="width: 100px; height: 100px; object-fit: cover;">
-            <h5 class="text-white text-center mb-2" style="border-bottom: 2px solid white; padding-bottom: 5px;">Nama Dosen</h5>
+            <h5 class="text-white text-center mb-2" style="border-bottom: 2px solid white; padding-bottom: 5px;">Nama Admin</h5>
         </div>
 
         <!-- Daftar Navigasi -->
@@ -16,11 +16,6 @@
             <li class="nav-item mb-2">
                 <a href="<?= base_url('admin/kelola_mahasiswa'); ?>" class="nav-link text-white">
                     <i class="bi bi-calendar-check-fill"></i> Kelola Mahasiswa
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="<?= base_url('admin/input_nilai'); ?>" class="nav-link text-white">
-                    <i class="bi bi-plus-circle-fill"></i> Input Nilai
                 </a>
             </li>
             <li class="nav-item mb-2">

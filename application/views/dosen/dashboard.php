@@ -66,9 +66,9 @@
                 <div class="col-md-4">
                     <div class="p-4 bg-light rounded shadow-sm h-100 d-flex flex-column">
                         <h5 class="mb-3 text-secondary fw-bold">Laporan Nilai</h5>
-                        <p class="text-muted">Buat laporan nilai mahasiswa.</p>
-                        <a href="<?= base_url('dosen/laporan_nilai'); ?>" class="btn btn-info mt-auto">
-                            <i class="bi bi-file-earmark-text"></i> Buat Laporan
+                        <p class="text-muted">Laporan nilai mahasiswa.</p>
+                        <a href="<?= base_url('dosen/print_nilai'); ?>" class="btn btn-info mt-auto">
+                            <i class="bi bi-file-earmark-text"></i> Unduh PDF
                         </a>
                     </div>
                 </div>

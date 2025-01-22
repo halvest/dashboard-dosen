@@ -14,18 +14,8 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a href="<?= base_url('admin/kelola_mahasiswa'); ?>" class="nav-link text-white">
-                    <i class="bi bi-calendar-check-fill"></i> Kelola Mahasiswa
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="<?= base_url('admin/input_nilai'); ?>" class="nav-link text-white">
-                    <i class="bi bi-plus-circle-fill"></i> Input Nilai
-                </a>
-            </li>
-            <li class="nav-item mb-2">
-                <a href="<?= base_url('dashboard/kelola_jadwal'); ?>" class="nav-link text-white">
-                    <i class="bi bi-file-earmark-text-fill"></i> Kelola Jadwal
+                <a href="<?= base_url('dosen/print_nilai'); ?>" class="nav-link text-white d-flex align-items-center">
+                    <i class="bi bi-printer-fill me-2"></i> Print Nilai Mahasiswa
                 </a>
             </li>
             <div class="mt-auto" style="margin-bottom: 30px;">

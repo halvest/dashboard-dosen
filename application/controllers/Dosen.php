@@ -10,6 +10,7 @@ class Dosen extends CI_Controller {
         }
         $this->load->model('Dosen_model');
         $this->load->library('form_validation');
+        $this->load->library('pdf');
     }
 
     public function index() {
@@ -33,7 +34,7 @@ class Dosen extends CI_Controller {
             'mata_kuliah' => $this->db->get('mata_kuliah')->result_array(),
             'input_nilai' => $this->Dosen_model->get_nilai(),
         ];
-        $this->load->view('dosen/head', ['title' => 'Rekap Nilai']);
+        $this->load->view('dosen/head', ['title' => 'Laporan Nilai Mahasiswa ']);
         $this->load->view('dosen/navbar');
         $this->load->view('dosen/sidebar');
         $this->load->view('dosen/rekap_nilai', $data);
@@ -46,7 +47,7 @@ class Dosen extends CI_Controller {
             'mata_kuliah' => $this->db->get('mata_kuliah')->result_array(),
             'input_nilai' => $this->Dosen_model->get_nilai(),
         ];
-        $this->load->view('dosen/head', ['title' => 'Input Nilai']);
+        $this->load->view('dosen/head', ['title' => 'Rekapitulasi Nilai Mahasiswa']);
         $this->load->view('dosen/navbar');
         $this->load->view('dosen/sidebar');
         $this->load->view('dosen/input_nilai', $data);
@@ -75,29 +76,29 @@ class Dosen extends CI_Controller {
         redirect('dosen/input_nilai');
     }
 
-    public function edit_nilai() {
-        $id_nilai = $this->input->post('id_nilai');
-        $update_data = [
-            'tugas' => $this->input->post('tugas'),
-            'responsi' => $this->input->post('responsi'),
-            'uts' => $this->input->post('uts'),
-            'uas' => $this->input->post('uas'),
-        ];
-        $this->Dosen_model->update_nilai($id_nilai, $update_data);
-        $this->session->set_flashdata('success', 'Nilai berhasil diperbarui.');
-        redirect('dosen/input_nilai');
-    }
-
     public function hapus_nilai($id) {
         $this->Dosen_model->delete_nilai($id);
         $this->session->set_flashdata('success', 'Nilai berhasil dihapus.');
         redirect('dosen/input_nilai');
     }
 
-    public function get_mahasiswa_by_nim($nim)
-    {
-        $data = $this->Dosen_model->get_mahasiswa_by_nim($nim);
-        echo json_encode($data);
-    }
+    public function print_nilai() {
+        // Ambil data nilai mahasiswa dari model
+        $data = [
+            'mahasiswa' => $this->Dosen_model->get_mahasiswa(),
+            'mata_kuliah' => $this->db->get('mata_kuliah')->result_array(),
+            'input_nilai' => $this->Dosen_model->get_nilai(),
+        ];
 
+        // Load tampilan cetak nilai
+        $html = $this->load->view('dosen/print_nilai', $data, true);
+
+        // Konversi tampilan menjadi PDF
+        $this->pdf->loadHtml($html);
+        $this->pdf->setPaper('A4', 'landscape');
+        $this->pdf->render();
+
+        // Output PDF untuk diunduh
+        $this->pdf->stream("laporan_nilai_mahasiswa.pdf", array("Attachment" => 1));
+    }
 }

@@ -1,11 +1,19 @@
-<div class="container mt-5">
-    <h3 class="text-center">Kelola Nilai Mahasiswa</h3>
+<div class="container mt-4">
+    <br>
+    <br>
 
-    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahNilaiModal">Tambah Nilai</button>
+    <!-- Flash Messages -->
+    <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $this->session->flashdata('success'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
-    <table class="table table-bordered table-striped table-hover table-responsive">
-        <thead>
+    <table class="table table-hover table-striped align-middle">
+        <thead class="table-dark">
             <tr>
+                <th>No</th>
                 <th>Nama Mahasiswa</th>
                 <th>NIM</th>
                 <th>Mata Kuliah</th>
@@ -14,33 +22,61 @@
                 <th>Responsi</th>
                 <th>UTS</th>
                 <th>UAS</th>
-                <th>Aksi</th>
+                <th>Nilai Angka</th>
+                <th>Nilai Huruf</th>
+                <th class="text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($input_nilai as $nilai): ?>
-            <tr>
+    <?php foreach ($input_nilai as $i => $nilai): 
+        // Perhitungan nilai angka sebagai rata-rata dari tugas, responsi, UTS, dan UAS
+        $nilai_angka = ($nilai['nilai_tugas'] + $nilai['nilai_responsi'] + $nilai['nilai_uts'] + $nilai['nilai_uas']) / 4;
+
+        // Penentuan nilai huruf berdasarkan nilai angka
+        if ($nilai_angka >= 85) {
+            $nilai_huruf = 'A';
+        } elseif ($nilai_angka >= 75) {
+            $nilai_huruf = 'B';
+        } elseif ($nilai_angka >= 60) {
+            $nilai_huruf = 'C';
+        } elseif ($nilai_angka >= 50) {
+            $nilai_huruf = 'D';
+        } else {
+            $nilai_huruf = 'E';
+        }
+    ?>
+        <tr>
+            <td><?= $i + 1; ?></td>
             <td><?= $nilai['nama_mahasiswa']; ?></td>
-                <td><?= $nilai['NIM']; ?></td>
-                <td><?= $nilai['mata_kuliah']; ?></td>
-                <td><?= $nilai['kelas']; ?></td>
-                <td><?= $nilai['nilai_tugas']; ?></td>
-                <td><?= $nilai['nilai_responsi']; ?></td>
-                <td><?= $nilai['nilai_uts']; ?></td>
-                <td><?= $nilai['nilai_uas']; ?></td>
-                <td>
+            <td><?= $nilai['NIM']; ?></td>
+            <td><?= $nilai['mata_kuliah'] ?: '-'; ?></td>
+            <td><?= $nilai['kelas'] ?: '-'; ?></td>
+            <td><?= $nilai['nilai_tugas'] !== null ? $nilai['nilai_tugas'] : '-'; ?></td>
+            <td><?= $nilai['nilai_responsi'] !== null ? $nilai['nilai_responsi'] : '-'; ?></td>
+            <td><?= $nilai['nilai_uts'] !== null ? $nilai['nilai_uts'] : '-'; ?></td>
+            <td><?= $nilai['nilai_uas'] !== null ? $nilai['nilai_uas'] : '-'; ?></td>
+            <td><?= number_format($nilai_angka, 2); ?></td>
+            <td><?= $nilai_huruf; ?></td>
+            <td class="text-center">
+                <?php if ($nilai['id_nilai']): ?>
                     <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editNilaiModal" onclick="setEditForm(<?= htmlspecialchars(json_encode($nilai)); ?>)">
-                        <i class="bi bi-pencil-fill"></i> Edit
+                        <i class="bi bi-pencil-fill"></i>
                     </button>
                     <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?= base_url('dosen/hapus_nilai/' . $nilai['id_nilai']); ?>', '<?= $nilai['nama_mahasiswa']; ?>')">
-                        <i class="bi bi-trash-fill"></i> Hapus
+                        <i class="bi bi-trash-fill"></i>
                     </button>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
+                <?php else: ?>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#tambahNilaiModal">
+                        Tambah Nilai
+                    </button>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
     </table>
 </div>
+
 
 <!-- Modal Tambah Nilai -->
 <div class="modal fade" id="tambahNilaiModal" tabindex="-1">
@@ -52,16 +88,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" name="nim" placeholder="NIM" class="form-control mb-3" required>
-                    <select name="id_mata_kuliah" class="form-control mb-3" required>
+                    <input type="text" name="nim" placeholder="NIM" class="form-control mb-2" required>
+                    <select name="id_mata_kuliah" class="form-control mb-2" required>
+                        <option value="" disabled selected>Pilih Mata Kuliah</option>
                         <?php foreach ($mata_kuliah as $mk): ?>
-                        <option value="<?= $mk['id_mata_kuliah']; ?>"><?= $mk['nama_mata_kuliah']; ?></option>
+                            <option value="<?= $mk['id_mata_kuliah']; ?>"><?= $mk['nama_mata_kuliah']; ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="number" name="tugas" placeholder="Nilai Tugas (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" name="responsi" placeholder="Nilai Responsi (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" name="uts" placeholder="Nilai UTS (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" name="uas" placeholder="Nilai UAS (0-100)" class="form-control mb-3" min="0" max="100" required>
+                    <input type="number" name="tugas" placeholder="Nilai Tugas (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" name="responsi" placeholder="Nilai Responsi (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" name="uts" placeholder="Nilai UTS (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" name="uas" placeholder="Nilai UAS (0-100)" class="form-control mb-2" min="0" max="100" required>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -82,10 +119,10 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="edit-id-nilai" name="id_nilai">
-                    <input type="number" id="edit-tugas" name="tugas" placeholder="Nilai Tugas (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" id="edit-responsi" name="responsi" placeholder="Nilai Responsi (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" id="edit-uts" name="uts" placeholder="Nilai UTS (0-100)" class="form-control mb-3" min="0" max="100" required>
-                    <input type="number" id="edit-uas" name="uas" placeholder="Nilai UAS (0-100)" class="form-control mb-3" min="0" max="100" required>
+                    <input type="number" id="edit-tugas" name="tugas" placeholder="Nilai Tugas (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" id="edit-responsi" name="responsi" placeholder="Nilai Responsi (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" id="edit-uts" name="uts" placeholder="Nilai UTS (0-100)" class="form-control mb-2" min="0" max="100" required>
+                    <input type="number" id="edit-uas" name="uas" placeholder="Nilai UAS (0-100)" class="form-control mb-2" min="0" max="100" required>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-warning">Update</button>
@@ -121,10 +158,6 @@
         const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
         modal.show();
     }
-
-    const toastElList = document.querySelectorAll('.toast');
-    const toastList = [...toastElList].map(toastEl => new bootstrap.Toast(toastEl, { delay: 3000 }));
-    toastList.forEach(toast => toast.show());
 
     function setEditForm(data) {
         document.getElementById('edit-id-nilai').value = data.id_nilai;

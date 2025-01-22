@@ -14,18 +14,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Card: Input Nilai Mahasiswa -->
-            <div class="col-md-4">
-                <div class="card shadow-sm text-white bg-success h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Input Nilai Mahasiswa</h5>
-                        <p class="card-text">Masukkan nilai mahasiswa berdasarkan laporan dosen.</p>
-                        <a href="<?= base_url('admin/input_nilai'); ?>" class="btn btn-light mt-auto">
-                            <i class="bi bi-pencil-square"></i> Input Nilai
-                        </a>
-                    </div>
-                </div>
-            </div>
             <!-- Card: Jadwal Mengajar -->
             <div class="col-md-4">
                 <div class="card shadow-sm text-white bg-info h-100">
